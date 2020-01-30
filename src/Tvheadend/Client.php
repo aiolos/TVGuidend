@@ -2,6 +2,7 @@
 
 namespace App\Tvheadend;
 
+use Carbon\Carbon;
 use Symfony\Component\HttpClient\HttpClient;
 
 class Client
@@ -19,7 +20,7 @@ class Client
 
         return $playing->toArray()['entries'];
     }
-    public function getEpg(?string $channelName, ?int $start, ?int $end): array
+    public function getEpg(?string $channelName, Carbon $start, Carbon $end): array
     {
         $playing = $this->getClient()->request(
             'POST',
@@ -28,8 +29,8 @@ class Client
                 'body' => [
                     'channel' => $channelName,
                     'filter' => json_encode([
-                        ['field' => 'stop', 'type' => 'numeric', 'value' => $start, 'comparison' => 'gt'],
-                        ['field' => 'start', 'type' => 'numeric', 'value' => $end, 'comparison' => 'lt'],
+                        ['field' => 'stop', 'type' => 'numeric', 'value' => $start->timestamp, 'comparison' => 'gt'],
+                        ['field' => 'start', 'type' => 'numeric', 'value' => $end->timestamp, 'comparison' => 'lt'],
                     ]),
                 ]
             ]
