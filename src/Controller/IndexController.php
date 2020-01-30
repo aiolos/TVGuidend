@@ -119,6 +119,18 @@ class IndexController extends AbstractController
     }
 
     /**
+     * @Route("/timers", name="timers")
+     */
+    public function getTimers()
+    {
+        $timers = $this->tvheadendClient->getTimers();
+
+        return $this->render('index/timers.html.twig', [
+            'timers' => $timers,
+        ]);
+    }
+
+    /**
      * @Route("/status", name="status")
      */
     public function status()

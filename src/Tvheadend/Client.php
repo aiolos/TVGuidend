@@ -63,6 +63,15 @@ class Client
         )->toArray()['entries'];
     }
 
+    public function getTimers()
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/entry/grid_upcoming',
+            ['query' => ['sort' => 'start']]
+        )->toArray()['entries'];
+    }
+
     public function getServerInfo(): array
     {
         return $this->getClient()->request('GET', '/api/serverinfo')->toArray();

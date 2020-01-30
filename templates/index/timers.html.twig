@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id='layout'>
+    <div id='banner'>
+        <table>
+            <tr>
+                <td class='col_title'><div id='mobmenu'>&#9776;</div> <h1>Timers</h1></td>
+            </tr>
+        </table>
+    </div>
+    <div id='wrapper'>
+        <div id='content'>
+            <table class='list'>
+                <tr class='heading'>
+                    <td class='col_info'></td>
+                    <td class='col_channel'><h2>Channel</h2></td>
+                    <td class='col_date'><h2>Date</h2></td>
+                    <td class='col_start'><h2>Start</h2></td>
+                    <td class='col_stop'><h2>Stop</h2></td>
+                    <td class='col_name'><h2>Name</h2></td>
+                    <td class='col_channel'><h2>Mode</h2></td>
+                    <td class=col_delete></td>
+                </tr>
+                {% for timer in timers %}
+                    <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' title=''>
+                        <td class='col_info'>
+                        {% if timer.start_real < "now"|date('U') %}
+                            <img src='/assets/images/rec.png'>
+                        {% else %}
+                            <img src='/assets/images/tick_green.png'>
+                        {% endif %}
+                        </td>
+                        <td class='col_channel'>{{ timer.channelname }}</td>
+                        <td class='col_date selected'>{{ timer.start_real|date('d-m-Y') }}</td>
+                        <td class='col_start'>{{ timer.start_real|date('H:i') }}</td>
+                        <td class='col_stop'>{{ timer.stop_real|date('d-m-Y') }}</td>
+                        <td class='col_name'>{{ timer.disp_title }}</td>
+                        <td class='col_channel'>{{ (timer.autorec != '' ? 'Autorec' : (timer.timerec != '' ? 'Timed Recording' : '')) }}</td>
+                        <td class='col_delete'>
+                            <a href='timers.php?uuid={{ timer.uuid }}'><img src='/assets/images/delete.png' title='Delete Timer'></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
