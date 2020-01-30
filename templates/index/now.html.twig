@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id='layout'>
+        <div id='banner'>
+            <form name='media' method='GET' action='now.php'>
+                <input type='hidden' name='update' value='1'>
+                <table>
+                    <tr>
+                        <td class='col_title'>
+                            <div id='mobmenu'>&#9776;</div>
+                            <h1>What's on at {{ "now"|date("H:i") }}</h1></td>
+                        <td>
+
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id='wrapper'>
+            <div id='whatson'>
+                <table class='list'>
+                    <tr class='newday'>
+                        <td colspan='5'><span class='date_long'>{{ "now"|date('l, j M Y') }}</span></td>
+                    </tr>
+                    {% for channel in channels %}
+                        <tr class="{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}">
+                            <td class='col_duration'>{{ channel.now.start|date('H:i') }} - {{ channel.now.stop|date('H:i') }}
+                                <table border=0 cellspacing=0 cellpadding=0 class='percent'
+                                       title='$don min&nbsp;/&nbsp;$dur min'>
+                                    <tr>
+                                        <td class='elapsed' width='{{ channel.now.percentage }}%'>
+                                            <img src='assets/images/spacer.gif' width=1 height=1 alt=''>
+                                        </td>
+                                        <td class='remaining'>
+                                            <img src='assets/images/spacer.gif' width=1 height=1 alt=''>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class='col_channel'>
+                                <div class='channel_name'>
+                                    {{ channel.name }}
+                                </div>
+                            </td>
+                            <td class='col_title'>
+                                <div class='epg_title'>{{ channel.now.title }}</div>
+                                <div class='epg_subtitle'>{{ channel.now.description }}</div>
+                            </td>
+                            <td>
+                                <a href='now.php?eventId={{ channel.now.eventId }}'>
+                                    <img src='assets/images/rec_button1.png' alt='record' title='record'>
+                                </a>
+                            </td>
+                            <td class='col_stream'>
+                                <a href='{{ url }}/play/stream/channel/{{ channel.uuid }}?title={{ channel.name }}'>
+                                    <img src='assets/images/play.png' title='Play'>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

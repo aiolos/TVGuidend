@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id='layout'>
+        <div id='banner'>
+            <form name='media' method='GET' action='timeline.php'>
+                <input type='hidden' name='update' value='1'>
+                <table>
+                    <tr>
+                        <td class='col_title'><div id='mobmenu'>&#9776;</div> <h1>Timeline</h1></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id='wrapper'>
+            <div id='timeline'>
+                <table class='list' style='table-layout: fixed;'>
+                    <col width="120px">
+                    <col id='schedules' width=100%>
+                    <tr class='newday'>
+                        <td>{{ "now"|date("D j M") }}</td>
+                        <td>
+                            {% set time = start %}
+                            {% for color in ['#ffffff', '#dee6ee', '#ffffff', '#dee6ee'] %}
+                                <div class='elapsed' style='float: left; width: 24.5%; background-color: {{ color }}'>
+                                    <img src='images/spacer.gif' width=1 height=1 alt=''>
+                                    {{ time|date('H:i') }}
+                                </div>
+                                {% set time = time + (timespan / 4) %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% for channel in channels %}
+                        <tr>
+                            <td class='col_channel'>
+                                <div class='channel_name' style="background-color: {{ loop.index0 is odd ? '#ffffff' : '#dee6ee' }}">
+                                    {{ channel.number }} {{ channel.name }}
+                                </div>
+                            </td>
+                            <td class='col_schedule'>
+                                {% set width = 98 - channel.epg|length / 8 %}
+                                {% for epg in channel.epg %}
+                                    {% if loop.first %}
+                                        {% set color = '#b4e29c' %}
+                                        {% if epg.start > start %}
+                                            <div class='spacer' style='width: {{ ((epg.start - start) * width) / timespan }}%;'>
+                                                <img src='images/spacer.gif' width=1 height=1 alt=''>
+                                            </div>
+                                        {% endif %}
+                                    {% else %}
+                                        {% set color = '#dee6ee' %}
+                                    {% endif %}
+                                    {% set duration = min(end, epg.stop) - max(start, epg.start) %}
+                                    {% set percentage = (width * duration) / timespan %}
+                                    <div class='item' style='background-color: {{ color }}; width: {{ percentage }}%;' title="{{ epg.description }}">
+                                        <img src='images/spacer.gif' width=1 height=1 alt=''>{{ epg.title }}
+                                    </div>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <span id='timenow'>
+                    <img src='images/spacer.gif' border='0' width='1' height='1'>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}

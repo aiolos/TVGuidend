@@ -1,0 +1,8 @@
+tvheadmin:
+  image: webdevops/php-nginx:7.2
+  ports:
+    - 8087:80
+  environment:
+    - WEB_DOCUMENT_ROOT=/app/public/
+  volumes:
+    - ./:/app
