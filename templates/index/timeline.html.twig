@@ -20,11 +20,11 @@
                     <col id='schedules' width=100%>
                     <tr class='newday'>
                         <td>{{ "now"|date("D j M") }}</td>
-                        <td>
+                        <td id="timespanCell">
                             {% set time = start %}
                             {% for color in ['#ffffff', '#dee6ee', '#ffffff', '#dee6ee'] %}
                                 <div class='elapsed' style='float: left; width: 24.5%; background-color: {{ color }}'>
-                                    <img src='images/spacer.gif' width=1 height=1 alt=''>
+                                    <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
                                     {{ time|date('H:i') }}
                                 </div>
                                 {% set time = time + (timespan / 4) %}
@@ -45,7 +45,7 @@
                                         {% set color = '#b4e29c' %}
                                         {% if epg.start > start %}
                                             <div class='spacer' style='width: {{ ((epg.start - start) * width) / timespan }}%;'>
-                                                <img src='images/spacer.gif' width=1 height=1 alt=''>
+                                                <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
                                             </div>
                                         {% endif %}
                                     {% else %}
@@ -54,7 +54,7 @@
                                     {% set duration = min(end, epg.stop) - max(start, epg.start) %}
                                     {% set percentage = (width * duration) / timespan %}
                                     <div class='item' style='background-color: {{ color }}; width: {{ percentage }}%;' title="{{ epg.description }}">
-                                        <img src='images/spacer.gif' width=1 height=1 alt=''>{{ epg.title }}
+                                        <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>{{ epg.title }}
                                     </div>
                                 {% endfor %}
                             </td>
@@ -62,9 +62,29 @@
                     {% endfor %}
                 </table>
                 <span id='timenow'>
-                    <img src='images/spacer.gif' border='0' width='1' height='1'>
+                    <img src='/assets/images/spacer.gif' border='0' width='1' height='1'>
                 </span>
             </div>
         </div>
     </div>
+    <script type='text/javascript'>
+        window.onload = drawCursor;
+
+        var globalResizeTimer = null;
+        window.onresize = function() {
+            if(globalResizeTimer != null) window.clearTimeout(globalResizeTimer);
+            globalResizeTimer = window.setTimeout(drawCursor(), 200);
+        };
+        function drawCursor() {
+            var elem = document.getElementById('timespanCell');
+            if(elem) {
+                var rect = elem.getBoundingClientRect();
+                var cursor = document.getElementById('timenow');
+                cursor.style.top = (rect.top+22) + 'px';
+                cursor.style.height = (rect.height-22) + 'px';
+                var pos = rect.left + (0.98 * {{ (now - start) / timespan }} * rect.width);
+                cursor.style.left = pos + 'px';
+            }
+        }
+    </script>
 {% endblock %}

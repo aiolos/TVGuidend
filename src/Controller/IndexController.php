@@ -54,6 +54,7 @@ class IndexController extends AbstractController
             'channels' => $enrichedChannels,
             'start' => $start,
             'end' => $end,
+            'now' => $now,
             'timespan' => $timespan,
         ]);
     }
