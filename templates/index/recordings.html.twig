@@ -40,13 +40,13 @@
                         {% set rowClass = 'row_inprogress' %}
                     {% endif %}
                     <tr class='{{ rowClass }}'>
-                        <td class='col_date'>{{ recording.start|date('d-m-Y') }} {{ recording.removal }}
+                        <td class='col_date'>{{ recording.start|date('d-m-Y', '+01:00 GMT') }} {{ recording.removal }}
                             <span class='thinonly'><br />
-                                Time: {{ recording.start|date('H:i') }}<br />
+                                Time: {{ recording.start|date('H:i', '+01:00 GMT') }}<br />
                                 Length: {{ (recording.stop - recording.start)|date('H:i', '+00:00 GMT') }}
                             </span>
                         </td>
-                        <td class='wideonly col_time'>{{ recording.start|date('H:i') }}</td>
+                        <td class='wideonly col_time'>{{ recording.start|date('H:i', '+01:00 GMT') }}</td>
                         <td class='col_channel'>{{ recording.channelname }}</td>
                         <td class='wideonly col_length'>{{ (recording.stop - recording.start)|date('H:i', '+00:00 GMT') }}</td>
                         <td class='col_name'>

@@ -16,13 +16,13 @@
                     <col width="120px">
                     <col id='schedules' width=100%>
                     <tr class='newday'>
-                        <td>{{ "now"|date("D j M") }}</td>
+                        <td>{{ "now"|date("D j M", '+01:00 GMT') }}</td>
                         <td id="timespanCell">
                             {% set time = start %}
                             {% for color in ['#ffffff', '#dee6ee', '#ffffff', '#dee6ee'] %}
                                 <div class='elapsed' style='float: left; width: 24.5%; background-color: {{ color }}'>
                                     <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
-                                    {{ time|date('H:i') }}
+                                    {{ time|date('H:i', '+01:00 GMT') }}
                                 </div>
                                 {% set time = time + (timespan / 4) %}
                             {% endfor %}

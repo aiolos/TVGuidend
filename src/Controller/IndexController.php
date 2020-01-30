@@ -92,11 +92,12 @@ class IndexController extends AbstractController
                 return $channel['name'] === $channelName;
             });
         }
+        $channelToShow = array_shift($channel);
 
         return $this->render('index/channel.html.twig', [
             'channels' => $channels,
-            'channel' => array_shift($channel),
-            'channelEpg' => $this->tvheadendClient->getEpg($channelName, $start, $end),
+            'channel' => $channelToShow,
+            'channelEpg' => $this->tvheadendClient->getEpg($channelToShow['name'], $start, $end),
             'prev' => $start->copy()->subDay()->format('Y-m-d'),
             'next' => $start->copy()->addDay()->format('Y-m-d'),
             'today' => $start->timestamp,

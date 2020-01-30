@@ -54,7 +54,7 @@
                 </tr>
                 {% set last_prog_date = '' %}
                 {% for epg in channelEpg %}
-                    {% set prog_date = epg.start|date('l d/n') %}
+                    {% set prog_date = epg.start|date('l d/n', '+01:00 GMT') %}
                     {% if last_prog_date != prog_date %}
                         {% set last_prog_date = prog_date %}
 
@@ -66,7 +66,7 @@
                     {% endif %}
 
                     <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' id='$id'>
-                        <td class='col_duration'>{{ epg.start|date('H:i') }} - {{ epg.stop|date('H:i') }}</td>
+                        <td class='col_duration'>{{ epg.start|date('H:i', '+01:00 GMT') }} - {{ epg.stop|date('H:i', '+01:00 GMT') }}</td>
                         <td class='col_title'><div class='epg_title'>{{ epg.title }}</div><div class='epg_subtitle'>{{ epg.description }}</div></td>
                     {#if (!isset($p['dvrState']) || $p['dvrState'] != 'scheduled') {#}
                     {#$evt = $p["eventId"];#}

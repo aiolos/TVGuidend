@@ -9,7 +9,7 @@
                     <tr>
                         <td class='col_title'>
                             <div id='mobmenu'>&#9776;</div>
-                            <h1>What's on at {{ "now"|date("H:i") }}</h1></td>
+                            <h1>What's on at {{ "now"|date('H:i', '+01:00 GMT') }}</h1></td>
                         <td>
 
                         </td>
@@ -21,11 +21,13 @@
             <div id='whatson'>
                 <table class='list'>
                     <tr class='newday'>
-                        <td colspan='5'><span class='date_long'>{{ "now"|date('l, j M Y') }}</span></td>
+                        <td colspan='5'>
+                            <span class='date_long'>{{ "now"|date('l, j M Y', '+01:00 GMT') }}</span>
+                        </td>
                     </tr>
                     {% for channel in channels %}
                         <tr class="{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}">
-                            <td class='col_duration'>{{ channel.now.start|date('H:i') }} - {{ channel.now.stop|date('H:i') }}
+                            <td class='col_duration'>{{ channel.now.start|date('H:i', '+01:00 GMT') }} - {{ channel.now.stop|date('H:i', '+01:00 GMT') }}
                                 <table border=0 cellspacing=0 cellpadding=0 class='percent'
                                        title='$don min&nbsp;/&nbsp;$dur min'>
                                     <tr>

@@ -32,9 +32,9 @@
                         {% endif %}
                         </td>
                         <td class='col_channel'>{{ timer.channelname }}</td>
-                        <td class='col_date selected'>{{ timer.start_real|date('d-m-Y') }}</td>
-                        <td class='col_start'>{{ timer.start_real|date('H:i') }}</td>
-                        <td class='col_stop'>{{ timer.stop_real|date('d-m-Y') }}</td>
+                        <td class='col_date selected'>{{ timer.start_real|date('d-m-Y', '+01:00 GMT') }}</td>
+                        <td class='col_start'>{{ timer.start_real|date('H:i', '+01:00 GMT') }}</td>
+                        <td class='col_stop'>{{ timer.stop_real|date('H:i', '+01:00 GMT') }}</td>
                         <td class='col_name'>{{ timer.disp_title }}</td>
                         <td class='col_channel'>{{ (timer.autorec != '' ? 'Autorec' : (timer.timerec != '' ? 'Timed Recording' : '')) }}</td>
                         <td class='col_delete'>
