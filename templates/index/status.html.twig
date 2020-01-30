@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id='layout'>
+        <div id='banner'>
+            <table>
+                <tr>
+                    <td class='col_title'><div id='mobmenu'>&#9776;</div> <h1>System Status</h1></td>
+                </tr>
+            </table>
+        </div>
+        <div id='wrapper'>
+            <div id='content'>
+                <table class='list'>
+                    <tr class='heading'>
+                        <td class='col_name' colspan=2><h2>System Information</h2></td>
+                    </tr>
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Name</td>
+                        <td class='col_name'>{{ serverInfo.name }}</td>
+                    </tr>
+                    <tr class='row_even'>
+                        <td class='col_channel'>Software Version</td>
+                        <td class='col_name'>{{ serverInfo.sw_version }}</td>
+                    </tr>
+                    <tr class='row_odd'>
+                        <td class='col_channel'>API Version</td>
+                        <td class='col_name'>{{ serverInfo.api_version }}</td>
+                    </tr>
+                </table>
+
+                {% for input in inputStatus %}
+                <table class='list'>
+                    <tr class='heading'>
+                        <td class='col_name' colspan=2>
+                            <h2>Input Information</h2>
+                        </td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Input name</td>
+                        <td class='col_name'>{{ input.input }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>UUID</td>
+                        <td class='col_name'>{{ input.uuid }}</td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Weight</td>
+                        <td class='col_name'>{{ input.weight }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Bandwidth</td>
+                        <td class='col_name'>{{ input.bps }}</td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Bit Error Rate</td>
+                        <td class='col_name'>{{ input.ber }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Uncorrected Blocks</td>
+                        <td class='col_name'>{{ input.unc }}</td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Transport Errors</td>
+                        <td class='col_name'>{{ input.te }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Continuity Errors</td>
+                        <td class='col_name'>{{ input.cc }}</td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Signal Strength</td>
+                        <td class='col_name'>
+                            {% if input.signal_scale == 1 %}
+                                {{ (input.signal * 100 / 65535)|round }}%
+                            {% else %}
+                                {{ (input.signal / 1000)|round(1) }} dBm
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Signal to Noise Ratio</td>
+                        <td class='col_name'>
+                            {% if input.snr_scale == 1 %}
+                                {{ (input.snr * 100 / 65535)|round }}%
+                            {% else %}
+                                {{ (input.snr / 1000)|round(1) }} dB
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Block error count</td>
+                        <td class='col_name'>{{ input.ec_block }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Total Block Error Count</td>
+                        <td class='col_name'>{{ input.tc_block }}</td>
+                    </tr>
+
+                    <tr class='row_odd'>
+                        <td class='col_channel'>Bit error count</td>
+                        <td class='col_name'>{{ input.ec_bit }}</td>
+                    </tr>
+
+                    <tr class='row_even'>
+                        <td class='col_channel'>Total Bit Error Count</td>
+                        <td class='col_name'>{{ input.tc_bit }}</td>
+                    </tr>
+                </table>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
