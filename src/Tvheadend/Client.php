@@ -41,7 +41,10 @@ class Client
 
     public function getChannels(): array
     {
-        $channels = $this->getClient()->request('GET', '/api/channel/grid?limit=9999');
+        $channels = $this->getClient()->request(
+            'GET',
+            '/api/channel/grid',
+            ['query' => ['limit' => 9999]]);
 
         $channels = $channels->toArray()['entries'];
         usort($channels, function($a, $b) {
@@ -49,6 +52,15 @@ class Client
         });
 
         return $channels;
+    }
+
+    public function getRecordings(): array
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/entry/grid',
+            ['query' => ['limit' => 99999, 'sort' => 'start', 'dir' => 'desc']]
+        )->toArray()['entries'];
     }
 
     public function getServerInfo(): array

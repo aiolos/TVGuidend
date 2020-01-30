@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div id='layout'>
+    <div id='banner'>
+        <table>
+            <tr>
+                <td class='col_title'><div id='mobmenu'>&#9776;</div> <h1>Recordings</h1>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <span class='wideonly'>
+
+                    </span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id='wrapper'>
+        <div id='content'>
+            <table class='list'>
+                <tr class='heading'>
+                    <td class='col_date'><h2>Date</h2></td>
+                    <td class='wideonly col_time'><h2>Time</h2></td>
+                    <td class='col_channel'><h2>Channel</h2></td>
+                    <td class='wideonly col_length'><h2>Length</h2></td>
+                    <td class='col_name'><h2>Name</h2></td>
+                    <td class='col_status'>Status</td>
+                    <td class='col_delete'></td>
+                    <td class='col_stream'></td>
+                </tr>
+                {% for recording in recordings %}
+                    {% set rowClass = 'row_error' %}
+                    {% if recording.sched_status == 'completed' %}
+                        {% if recording.status == 'Completed OK' %}
+                            {% set rowClass = (loop.index0 is odd ? 'row_odd' : 'row_even') %}
+                        {% endif %}
+                    {% elseif recording.sched_status == 'recording' %}
+                        {% set rowClass = 'row_inprogress' %}
+                    {% endif %}
+                    <tr class='{{ rowClass }}'>
+                        <td class='col_date'>{{ recording.start|date('d-m-Y') }} {{ recording.removal }}
+                            <span class='thinonly'><br />
+                                Time: {{ recording.start|date('H:i') }}<br />
+                                Length: {{ (recording.stop - recording.start)|date('H:i', '+00:00 GMT') }}
+                            </span>
+                        </td>
+                        <td class='wideonly col_time'>{{ recording.start|date('H:i') }}</td>
+                        <td class='col_channel'>{{ recording.channelname }}</td>
+                        <td class='wideonly col_length'>{{ (recording.stop - recording.start)|date('H:i', '+00:00 GMT') }}</td>
+                        <td class='col_name'>
+                            <div class='epg_title'>{{ recording.disp_title }}</div>
+                            <div class='epg_subtitle'>{{ recording.disp_description }}</div>
+                        </td>
+                        <td>{{ recording.status }}</td>
+                        <td class='col_delete'>
+                            <a href='recordings.php?uuid={{ recording.uuid }}&SORT=$sort'><img src='/assets/images/delete.png' title='Delete Recording'></a>
+                        </td>
+                        <td class='col_stream'>
+                            {% if rowClass != 'row_error' %}
+                                <a href='$view_url/play/dvrfile/{{ recording.uuid }}?title={{ recording.disp_title }}'><img src='/assets/images/play.png' title='Play'></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
