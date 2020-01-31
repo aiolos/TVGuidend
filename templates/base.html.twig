@@ -4,7 +4,7 @@
     <meta charset=utf-8>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TVGuidend">
-    <title>TVGuidend - <?php echo $page_title; ?></title>
+    <title>TVGuidend - {{ title is defined ? title }}</title>
     <link rel="stylesheet" href="/assets/style.css">
     {% block stylesheets %}{% endblock %}
     </head>
@@ -13,21 +13,15 @@
 
             {% include('nav.html.twig') %}
 
-        <div class="container-fluid">
-            <div class="row">
-                <main role="main" class="col-12">
-                    {% block body %}{% endblock %}
-                </main>
+            <div class="container-fluid">
+                <div class="row">
+                    <main role="main" class="col-12">
+                        {% block body %}{% endblock %}
+                    </main>
+                </div>
             </div>
+
         </div>
-
-        <footer class="footer">
-            <hr>
-            <div class="container text-center">
-                <span class="text-muted"><i class="fa fa-copyright"></i> <a href="https://enri.nl">Enri.nl</a> </span>
-            </div>
-        </footer>
-
 
         {% block javascripts %}{% endblock %}
     </body>
