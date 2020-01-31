@@ -1,6 +1,6 @@
 {
     "type": "project",
-    "license": "MIT",
+    "license": "GPL",
     "require": {
         "php": "^7.2.5",
         "ext-ctype": "*",
