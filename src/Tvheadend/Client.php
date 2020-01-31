@@ -72,6 +72,24 @@ class Client
         )->toArray()['entries'];
     }
 
+    public function record($eventId)
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/entry/create_by_event',
+            ['query' => ['event_id' => $eventId, 'config_uuid' => $this->getDvrProfiles()[0]['uuid']]]
+        );
+
+        return true;
+    }
+
+    public function getDvrProfiles()
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/config/grid')->toArray()['entries'];
+    }
+
     public function getServerInfo(): array
     {
         return $this->getClient()->request('GET', '/api/serverinfo')->toArray();

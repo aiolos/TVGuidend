@@ -67,6 +67,11 @@
 
                     <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' id='$id'>
                         <td class='col_duration'>{{ epg.start|date('H:i', '+01:00 GMT') }} - {{ epg.stop|date('H:i', '+01:00 GMT') }}</td>
+                        <td>
+                            {% if epg.dvrState is defined and epg.dvrState == 'recording' %}
+                                <img src='assets/images/rec.png' alt='record' title='record'>
+                            {% endif %}
+                        </td>
                         <td class='col_title'><div class='epg_title'>{{ epg.title }}</div><div class='epg_subtitle'>{{ epg.description }}</div></td>
                     {#if (!isset($p['dvrState']) || $p['dvrState'] != 'scheduled') {#}
                     {#$evt = $p["eventId"];#}

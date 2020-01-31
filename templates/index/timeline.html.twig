@@ -51,6 +51,9 @@
                                     {% set duration = min(end, epg.stop) - max(start, epg.start) %}
                                     {% set percentage = (width * duration) / timespan %}
                                     <div class='item' style='background-color: {{ color }}; width: {{ percentage }}%;' title="{{ epg.description }}">
+                                        {% if epg.dvrState is defined and epg.dvrState == 'recording' %}
+                                            <img src='assets/images/rec.png' height="12px;" alt='record' title='record'>
+                                        {% endif %}
                                         <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>{{ epg.title }}
                                     </div>
                                 {% endfor %}

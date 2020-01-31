@@ -23,6 +23,13 @@ class IndexController extends AbstractController
      */
     public function now(Request $request)
     {
+        if ($request->get('action', false) !== false) {
+            switch ($request->get('action')) {
+                case 'record':
+                    $this->tvheadendClient->record($request->get('event'));
+                    break;
+            }
+        }
         $channels = $this->tvheadendClient->getChannels();
 
         $enrichedChannels = [];

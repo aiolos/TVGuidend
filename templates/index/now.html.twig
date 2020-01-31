@@ -21,7 +21,7 @@
             <div id='whatson'>
                 <table class='list'>
                     <tr class='newday'>
-                        <td colspan='5'>
+                        <td colspan='6'>
                             <span class='date_long'>{{ "now"|date('l, j M Y', '+01:00 GMT') }}</span>
                         </td>
                     </tr>
@@ -45,12 +45,17 @@
                                     {{ channel.name }}
                                 </div>
                             </td>
+                            <td>
+                                {% if channel.now.dvrState is defined and channel.now.dvrState == 'recording' %}
+                                    <img src='assets/images/rec.png' alt='record' title='record'>
+                                {% endif %}
+                            </td>
                             <td class='col_title'>
                                 <div class='epg_title'>{{ channel.now.title }}</div>
                                 <div class='epg_subtitle'>{{ channel.now.description }}</div>
                             </td>
                             <td>
-                                <a href='now.php?eventId={{ channel.now.eventId }}'>
+                                <a href='/?action=record&event={{ channel.now.eventId }}'>
                                     <img src='assets/images/rec_button1.png' alt='record' title='record'>
                                 </a>
                             </td>
