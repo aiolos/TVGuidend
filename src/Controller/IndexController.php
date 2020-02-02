@@ -114,8 +114,16 @@ class IndexController extends AbstractController
     /**
      * @Route("/recordings", name="recordings")
      */
-    public function recordings()
+    public function recordings(Request $request)
     {
+        if ($request->get('action', false) !== false) {
+            switch ($request->get('action')) {
+                case 'delete':
+                    $this->tvheadendClient->delete($request->get('uuid'));
+                    break;
+            }
+        }
+
         $recordings = $this->tvheadendClient->getRecordings();
         $recordings = array_filter($recordings, function ($recording) {
             return $recording['sched_status'] !== 'scheduled'
@@ -123,6 +131,7 @@ class IndexController extends AbstractController
         });
         return $this->render('index/recordings.html.twig', [
             'recordings' => $recordings,
+            'url' => $this->tvheadendClient->getUrl(),
         ]);
     }
 

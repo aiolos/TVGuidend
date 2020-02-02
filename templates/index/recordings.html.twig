@@ -56,11 +56,15 @@
                         </td>
                         <td>{{ recording.status }}</td>
                         <td class='col_delete'>
-                            <a href='recordings.php?uuid={{ recording.uuid }}&SORT=$sort'><img src='/assets/images/delete.png' title='Delete Recording'></a>
+                            <a href='/recordings/?action=delete&uuid={{ recording.uuid }}'>
+                                <img src='/assets/images/delete.png' alt='delete' title='Delete recording'>
+                            </a>
                         </td>
                         <td class='col_stream'>
                             {% if rowClass != 'row_error' %}
-                                <a href='$view_url/play/dvrfile/{{ recording.uuid }}?title={{ recording.disp_title }}'><img src='/assets/images/play.png' title='Play'></a>
+                                <a href='{{ url }}/play/dvrfile/{{ recording.uuid }}?title={{ recording.disp_title }}' alt='play' title='Play recording'>
+                                    <img src='/assets/images/play.png' title='Play'>
+                                </a>
                             {% endif %}
                         </td>
                     </tr>

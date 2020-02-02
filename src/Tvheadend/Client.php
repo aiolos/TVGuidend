@@ -83,6 +83,15 @@ class Client
         return true;
     }
 
+    public function delete($uuid)
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/entry/remove',
+            ['query' => ['uuid' => $uuid]]
+        );
+    }
+
     public function getDvrProfiles()
     {
         return $this->getClient()->request(
