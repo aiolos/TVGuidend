@@ -125,7 +125,7 @@ a:hover {
 .row_error td,
 .row_inprogress td,
 .heading {
-    height: 17px;
+    height: 50px;
 }
 
 .list .row_even:hover,
@@ -143,7 +143,7 @@ a:hover {
 
 .heading td {
     background-color: #6d96a9;
-    height: 17px;
+    /*height: 17px;*/
 }
 
 .heading h2,
@@ -271,6 +271,7 @@ a:hover {
     float: left;
     background-color: #e0e0e0;
     white-space: nowrap;
+    height: 50px;
 }
 
 #timeline .item {
@@ -282,6 +283,7 @@ a:hover {
     border-left: 1px solid #6d96a9;
     border-right: 0px none;
     white-space: nowrap;
+    height: 50px;
 }
 
 #timenow {

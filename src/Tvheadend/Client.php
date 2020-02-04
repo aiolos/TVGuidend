@@ -79,8 +79,15 @@ class Client
             '/api/dvr/entry/create_by_event',
             ['query' => ['event_id' => $eventId, 'config_uuid' => $this->getDvrProfiles()[0]['uuid']]]
         );
+    }
 
-        return true;
+    public function autorecord($eventId)
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/autorec/create_by_series',
+            ['query' => ['event_id' => $eventId, 'config_uuid' => $this->getDvrProfiles()[0]['uuid']]]
+        );
     }
 
     public function delete($uuid)
@@ -90,6 +97,25 @@ class Client
             '/api/dvr/entry/remove',
             ['query' => ['uuid' => $uuid]]
         );
+    }
+
+    public function cancel($uuid)
+    {
+        return $this->getClient()->request(
+            'GET',
+            '/api/dvr/entry/cancel',
+            ['query' => ['uuid' => $uuid]]
+        );
+    }
+
+    public function cancelAutorec($uuid)
+    {
+        $response = $this->getClient()->request(
+            'GET',
+            '/api/idnode/delete',
+            ['query' => ['uuid' => $uuid]]
+        )->toArray();
+//        var_dump($response);exit;
     }
 
     public function getDvrProfiles()

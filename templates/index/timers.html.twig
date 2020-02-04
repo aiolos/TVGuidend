@@ -39,7 +39,15 @@
                         <td class='col_name'>{{ timer.disp_title }}</td>
                         <td class='col_channel'>{{ (timer.autorec != '' ? 'Autorec' : (timer.timerec != '' ? 'Timed Recording' : '')) }}</td>
                         <td class='col_delete'>
-                            <a href='timers.php?uuid={{ timer.uuid }}'><img src='/assets/images/delete.png' title='Delete Timer'></a>
+                            {% if timer.autorec != '' %}
+                                <a href='/timers?action=cancelseries&uuid={{ timer.autorec }}'>
+                                    <img src='/assets/images/delete.png' title='Delete Autorec'>
+                                </a>
+                            {% else %}
+                                <a href='/timers?action=cancel&uuid={{ timer.uuid }}'>
+                                    <img src='/assets/images/delete.png' title='Delete Timer'>
+                                </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

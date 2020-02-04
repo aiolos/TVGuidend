@@ -27,7 +27,8 @@
                     <td class='col_channel'><h2>Channel</h2></td>
                     <td class='wideonly col_length'><h2>Length</h2></td>
                     <td class='col_name'><h2>Name</h2></td>
-                    <td class='col_status'>Status</td>
+                    <td class='col_name'>Status</td>
+                    <td class='col_name'>Size</td>
                     <td class='col_delete'></td>
                     <td class='col_stream'></td>
                 </tr>
@@ -41,7 +42,7 @@
                         {% set rowClass = 'row_inprogress' %}
                     {% endif %}
                     <tr class='{{ rowClass }}'>
-                        <td class='col_date'>{{ recording.start|date('d-m-Y', '+01:00 GMT') }} {{ recording.removal }}
+                        <td class='col_date'>{{ recording.start|date('d-m-Y', '+01:00 GMT') }}
                             <span class='thinonly'><br />
                                 Time: {{ recording.start|date('H:i', '+01:00 GMT') }}<br />
                                 Length: {{ (recording.stop - recording.start)|date('H:i', '+00:00 GMT') }}
@@ -55,6 +56,13 @@
                             <div class='epg_subtitle'>{{ recording.disp_description }}</div>
                         </td>
                         <td>{{ recording.status }}</td>
+                        <td>
+                            {% if (recording.filesize / 10**6) > 1000 %}
+                                {{ (recording.filesize / 10**9)|round(2) }} GB
+                            {% else %}
+                                {{ (recording.filesize / 10**6)|round(2) }} MB
+                            {% endif %}
+                        </td>
                         <td class='col_delete'>
                             <a href='/recordings/?action=delete&uuid={{ recording.uuid }}'>
                                 <img src='/assets/images/delete.png' alt='delete' title='Delete recording'>

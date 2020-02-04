@@ -23,13 +23,7 @@ class IndexController extends AbstractController
      */
     public function now(Request $request)
     {
-        if ($request->get('action', false) !== false) {
-            switch ($request->get('action')) {
-                case 'record':
-                    $this->tvheadendClient->record($request->get('event'));
-                    break;
-            }
-        }
+        $this->handleAction($request);
         $channels = $this->tvheadendClient->getChannels();
 
         $enrichedChannels = [];
@@ -48,8 +42,9 @@ class IndexController extends AbstractController
     /**
      * @Route("/timeline", name="timeline")
      */
-    public function timeline()
+    public function timeline(Request $request)
     {
+        $this->handleAction($request);
         $channels = $this->tvheadendClient->getChannels();
         $timespan = 4 * 3600;
         $now = Carbon::now();
@@ -69,6 +64,7 @@ class IndexController extends AbstractController
             'end' => $end->timestamp,
             'now' => $now->timestamp,
             'timespan' => $timespan,
+            'url' => $this->tvheadendClient->getUrl(),
         ]);
     }
 
@@ -77,14 +73,16 @@ class IndexController extends AbstractController
      */
     public function channel(Request $request)
     {
-        return $this->channelWithName($request->get('channel'), $request->get('date'));
+        return $this->channelWithName($request, $request->get('channel'), $request->get('date'));
     }
 
     /**
      * @Route("/channel/{channelName}/{date}", name="channelWithName")
      */
-    public function channelWithName(string $channelName = null, string $date = null)
+    public function channelWithName(Request $request, string $channelName = null, string $date = null)
     {
+        $this->handleAction($request);
+
         if ($date === null) {
             $start = Carbon::now();
             $end = Carbon::today()->endOfDay();
@@ -108,6 +106,7 @@ class IndexController extends AbstractController
             'prev' => $start->copy()->subDay()->format('Y-m-d'),
             'next' => $start->copy()->addDay()->format('Y-m-d'),
             'today' => $start->timestamp,
+            'url' => $this->tvheadendClient->getUrl(),
         ]);
     }
 
@@ -116,13 +115,7 @@ class IndexController extends AbstractController
      */
     public function recordings(Request $request)
     {
-        if ($request->get('action', false) !== false) {
-            switch ($request->get('action')) {
-                case 'delete':
-                    $this->tvheadendClient->delete($request->get('uuid'));
-                    break;
-            }
-        }
+        $this->handleAction($request);
 
         $recordings = $this->tvheadendClient->getRecordings();
         $recordings = array_filter($recordings, function ($recording) {
@@ -138,8 +131,10 @@ class IndexController extends AbstractController
     /**
      * @Route("/timers", name="timers")
      */
-    public function getTimers()
+    public function getTimers(Request $request)
     {
+        $this->handleAction($request);
+
         $timers = $this->tvheadendClient->getTimers();
 
         return $this->render('index/timers.html.twig', [
@@ -156,5 +151,33 @@ class IndexController extends AbstractController
             'serverInfo' => $this->tvheadendClient->getServerInfo(),
             'inputStatus' => $this->tvheadendClient->getInputStatus(),
         ]);
+    }
+
+    private function handleAction(Request $request)
+    {
+        if ($request->get('action', false) !== false) {
+            switch (strtolower($request->get('action'))) {
+                case 'delete':
+                    $this->tvheadendClient->delete($request->get('uuid'));
+                    break;
+
+                case 'record':
+                    $this->tvheadendClient->record($request->get('event'));
+                    break;
+
+                case 'recordseries':
+                    $this->tvheadendClient->autorecord($request->get('event'));
+                    break;
+
+                case 'cancel':
+                    $this->tvheadendClient->cancel($request->get('uuid'));
+                    break;
+
+                case 'cancelseries':
+                    $this->tvheadendClient->cancelAutorec($request->get('uuid'));
+                    break;
+            }
+        }
+
     }
 }
