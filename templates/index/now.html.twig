@@ -48,7 +48,9 @@
                             </td>
                             <td>
                                 {% if channel.now.dvrState is defined and channel.now.dvrState == 'recording' %}
-                                    <i class="fas fa-2x fa-circle"></i>
+                                    <span style="color: #BB0404" title="Now recording">
+                                        <i class="fas fa-2x fa-file-video"></i>
+                                    </span>
                                 {% endif %}
                             </td>
                             <td class='col_title'>
@@ -56,13 +58,17 @@
                                 <div class='epg_subtitle'>{{ channel.now.description }}</div>
                             </td>
                             <td>
-                                <a href='/?action=record&event={{ channel.now.eventId }}'>
-                                    <i class="fas fa-2x fa-circle"></i>
+                                <a href='/?action=record&event={{ channel.now.eventId }}' title="Record">
+                                    <span style="color: #BB0404">
+                                        <i class="fas fa-2x fa-circle"></i>
+                                    </span>
                                 </a>
                             </td>
                             <td class='col_stream'>
-                                <a href='{{ url }}/play/stream/channel/{{ channel.uuid }}?title={{ channel.name }}'>
-                                    <i class="fas fa-2x fa-play-circle"></i>
+                                <a href='{{ url }}/play/stream/channel/{{ channel.uuid }}?title={{ channel.name }}' title="Play">
+                                    <span style="color: #6d96a9;">
+                                        <i class="fas fa-2x fa-play-circle"></i>
+                                    </span>
                                 </a>
                             </td>
                         </tr>

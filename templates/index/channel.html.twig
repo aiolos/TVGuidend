@@ -71,8 +71,16 @@
                     <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' id='$id'>
                         <td class='col_duration'>{{ epg.start|date('H:i', '+01:00 GMT') }} - {{ epg.stop|date('H:i', '+01:00 GMT') }}</td>
                         <td>
-                            {% if epg.dvrState is defined and (epg.dvrState == 'recording' or epg.dvrState == 'scheduled') %}
-                                <i class="fas fa-file-video"></i>
+                            {% if epg.dvrState is defined %}
+                                {% if epg.dvrState == 'recording' %}
+                                    <span style="color: #BB0404" title="Now recording">
+                                        <i class="fas fa-2x fa-file-video"></i>
+                                    </span>
+                                {% elseif epg.dvrState == 'scheduled' %}
+                                    <span style="color: #BB0404" title="Scheduled recording">
+                                        <i class="fas fa-2x fa-clock"></i>
+                                    </span>
+                                {% endif %}
                             {% endif %}
                         </td>
                         <td class='col_title'>
@@ -81,16 +89,20 @@
 
                         <td>
                             {% if epg.dvrState is not defined or (epg.dvrState != 'recording' and epg.dvrState != 'scheduled') %}
-                            <a href='/channel?action=record&event={{ epg.eventId }}'>
-                                <i class="fas fa-2x fa-circle"></i>
+                            <a href='/channel?action=record&event={{ epg.eventId }}' title="Record">
+                                <span style="color: #BB0404">
+                                    <i class="fas fa-2x fa-circle"></i>
+                                </span>
                             </a>
                             {% endif %}
                         </td>
 
                         <td>
                             {% if epg.dvrState is not defined or (epg.dvrState != 'recording' and epg.dvrState != 'scheduled') %}
-                            <a href='/channel?action=recordseries&event={{ epg.eventId }}'>
-                                <i class="fas fa-2x fa-redo"></i>
+                            <a href='/channel?action=recordseries&event={{ epg.eventId }}' title="Record series">
+                                <span style="color: #BB0404">
+                                    <i class="fas fa-2x fa-sync"></i>
+                                </span>
                             </a>
                             {% endif %}
                         </td>

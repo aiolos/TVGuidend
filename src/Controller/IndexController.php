@@ -83,6 +83,7 @@ class IndexController extends AbstractController
     {
         $this->handleAction($request);
 
+        $limit = 100;
         if ($date === null) {
             $start = Carbon::now();
             $end = Carbon::today()->endOfDay();
@@ -102,7 +103,7 @@ class IndexController extends AbstractController
         return $this->render('index/channel.html.twig', [
             'channels' => $channels,
             'channel' => $channelToShow,
-            'channelEpg' => $this->tvheadendClient->getEpg($channelToShow['name'], $start, $end),
+            'channelEpg' => $this->tvheadendClient->getEpg($channelToShow['name'], $start, $end, $limit),
             'prev' => $start->copy()->subDay()->format('Y-m-d'),
             'next' => $start->copy()->addDay()->format('Y-m-d'),
             'today' => $start->timestamp,

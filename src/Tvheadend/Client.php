@@ -20,7 +20,7 @@ class Client
 
         return $playing->toArray()['entries'];
     }
-    public function getEpg(?string $channelName, Carbon $start, Carbon $end): array
+    public function getEpg(?string $channelName, Carbon $start, Carbon $end, int $limit = 100): array
     {
         $playing = $this->getClient()->request(
             'POST',
@@ -28,6 +28,7 @@ class Client
             [
                 'body' => [
                     'channel' => $channelName,
+                    'limit' => $limit,
                     'filter' => json_encode([
                         ['field' => 'stop', 'type' => 'numeric', 'value' => $start->timestamp, 'comparison' => 'gt'],
                         ['field' => 'start', 'type' => 'numeric', 'value' => $end->timestamp, 'comparison' => 'lt'],
