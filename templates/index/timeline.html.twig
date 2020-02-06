@@ -32,7 +32,7 @@
                     {% for channel in channels %}
                         <tr>
                             <td class='col_channel'>
-                                <div class='channel_name' style="background-color: {{ loop.index0 is odd ? '#ffffff' : '#dee6ee' }}">
+                                <div class='channel_name' style="background-color: {{ loop.index0 is odd ? '#dee6ee' : '#ffffff' }}">
                                     <img src="{{ url }}/{{ channel.icon_public_url }}" style="height: 50px;" alt="{{ channel.number }} {{ channel.name }}">
                                 </div>
                             </td>

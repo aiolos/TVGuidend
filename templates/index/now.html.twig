@@ -33,10 +33,10 @@
                                        title='$don min&nbsp;/&nbsp;$dur min'>
                                     <tr>
                                         <td class='elapsed' width='{{ channel.now.percentage }}%'>
-                                            <img src='assets/images/spacer.gif' width=1 height=1 alt=''>
+                                            <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
                                         </td>
                                         <td class='remaining'>
-                                            <img src='assets/images/spacer.gif' width=1 height=1 alt=''>
+                                            <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
                                         </td>
                                     </tr>
                                 </table>
@@ -48,7 +48,7 @@
                             </td>
                             <td>
                                 {% if channel.now.dvrState is defined and channel.now.dvrState == 'recording' %}
-                                    <img src='assets/images/rec.png' alt='record' title='record'>
+                                    <img src='/assets/images/rec.png' alt='record' title='record'>
                                 {% endif %}
                             </td>
                             <td class='col_title'>
@@ -57,12 +57,12 @@
                             </td>
                             <td>
                                 <a href='/?action=record&event={{ channel.now.eventId }}'>
-                                    <img src='assets/images/rec_button1.png' alt='record' title='record'>
+                                    <img src='/assets/images/rec_button1.png' alt='record' title='record'>
                                 </a>
                             </td>
                             <td class='col_stream'>
                                 <a href='{{ url }}/play/stream/channel/{{ channel.uuid }}?title={{ channel.name }}'>
-                                    <img src='assets/images/play.png' title='Play'>
+                                    <img src='/assets/images/play.png' title='Play'>
                                 </a>
                             </td>
                         </tr>
