@@ -2,22 +2,12 @@
 
 namespace App\Controller;
 
-use App\Tvheadend\Client;
 use Carbon\Carbon;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class IndexController extends AbstractController
+final class IndexController extends AbstractController
 {
-
-    private $tvheadendClient;
-
-    public function __construct(Client $client)
-    {
-        $this->tvheadendClient = $client;
-    }
-
     /**
      * @Route("/", name="now")
      */
@@ -40,17 +30,22 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @Route("/timeline", name="timeline")
+     * @Route("/timeline/{start}/{timespan}", name="timeline")
      */
-    public function timeline(Request $request)
+    public function timeline(Request $request, int $start = null, int $timespan = 14400)
     {
         $this->handleAction($request);
         $channels = $this->tvheadendClient->getChannels();
-        $timespan = 4 * 3600;
         $now = Carbon::now();
-        $offset = $now->timestamp % 1800;
+        if ($start == null) {
+            $start = $now->copy();
+        } else {
+            $start = Carbon::createFromTimestamp($start);
+        }
 
-        $start = $now->copy()->subSeconds($offset);
+        $offset = $start->timestamp % 1800;
+
+        $start = $start->subSeconds($offset);
         $end = $start->copy()->addSeconds($timespan);
 
         foreach ($channels as $channel) {
@@ -109,76 +104,5 @@ class IndexController extends AbstractController
             'today' => $start->timestamp,
             'url' => $this->tvheadendClient->getUrl(),
         ]);
-    }
-
-    /**
-     * @Route("/recordings", name="recordings")
-     */
-    public function recordings(Request $request)
-    {
-        $this->handleAction($request);
-
-        $recordings = $this->tvheadendClient->getRecordings();
-        $recordings = array_filter($recordings, function ($recording) {
-            return $recording['sched_status'] !== 'scheduled'
-                && (in_array($recording['status'], ['Completed OK', 'Running']));
-        });
-        return $this->render('index/recordings.html.twig', [
-            'recordings' => $recordings,
-            'url' => $this->tvheadendClient->getUrl(),
-        ]);
-    }
-
-    /**
-     * @Route("/timers", name="timers")
-     */
-    public function getTimers(Request $request)
-    {
-        $this->handleAction($request);
-
-        $timers = $this->tvheadendClient->getTimers();
-
-        return $this->render('index/timers.html.twig', [
-            'timers' => $timers,
-        ]);
-    }
-
-    /**
-     * @Route("/status", name="status")
-     */
-    public function status()
-    {
-        return $this->render('index/status.html.twig', [
-            'serverInfo' => $this->tvheadendClient->getServerInfo(),
-            'inputStatus' => $this->tvheadendClient->getInputStatus(),
-        ]);
-    }
-
-    private function handleAction(Request $request)
-    {
-        if ($request->get('action', false) !== false) {
-            switch (strtolower($request->get('action'))) {
-                case 'delete':
-                    $this->tvheadendClient->delete($request->get('uuid'));
-                    break;
-
-                case 'record':
-                    $this->tvheadendClient->record($request->get('event'));
-                    break;
-
-                case 'recordseries':
-                    $this->tvheadendClient->autorecord($request->get('event'));
-                    break;
-
-                case 'cancel':
-                    $this->tvheadendClient->cancel($request->get('uuid'));
-                    break;
-
-                case 'cancelseries':
-                    $this->tvheadendClient->cancelAutorec($request->get('uuid'));
-                    break;
-            }
-        }
-
     }
 }

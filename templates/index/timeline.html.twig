@@ -7,7 +7,25 @@
             <table>
                 <tr>
                     <td class='col_title'><div id='mobmenu'>&#9776;</div> <h1>Timeline</h1></td>
-                    <td></td>
+                    <td>
+                        <a href="/timeline/{{ start - timespan }}/{{ timespan }}">
+                            <i class="fas fa-arrow-left"></i> Earlier
+                        </a>
+                        |
+                        Timespan:
+                        {% for hours in [2, 4, 6] %}
+                            <a href="/timeline/{{ start }}/{{ hours * 3600 }}">{{ hours }}</a>
+                            {% if not loop.last %}|{% endif %}
+                        {% endfor %}
+                            hours
+                        |
+                        <a href="/timeline">
+                            <i class="fas fa-clock"></i> Now
+                        </a>|
+                        <a href="/timeline/{{ end }}/{{ timespan }}">
+                            Later <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -39,7 +57,7 @@
                             <td class='col_schedule'>
                                 {% set width = 98 - channel.epg|length / 8 %}
                                 {% for epg in channel.epg %}
-                                    {% if loop.first %}
+                                    {% if loop.first and start < now and end > now %}
                                         {% set color = '#b4e29c' %}
                                         {% if epg.start > start %}
                                             <div class='spacer' style='width: {{ ((epg.start - start) * width) / timespan }}%;'>
