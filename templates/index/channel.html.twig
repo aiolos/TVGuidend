@@ -57,13 +57,13 @@
                 </tr>
                 {% set last_prog_date = '' %}
                 {% for epg in channelEpg %}
-                    {% set prog_date = epg.start|date('l d/n', '+01:00 GMT') %}
+                    {% set prog_date = epg.start|date('l d-m', '+01:00 GMT') %}
                     {% if last_prog_date != prog_date %}
                         {% set last_prog_date = prog_date %}
 
                         <tr class='newday'>
                             <td colspan='6'>
-                                <span class='date_long'>{{ prog_date }}</span>
+                                <span class='date_long'><h2>{{ prog_date }}</h2></span>
                             </td>
                         </tr>
                     {% endif %}
@@ -72,7 +72,7 @@
                         <td class='col_duration'>{{ epg.start|date('H:i', '+01:00 GMT') }} - {{ epg.stop|date('H:i', '+01:00 GMT') }}</td>
                         <td>
                             {% if epg.dvrState is defined and (epg.dvrState == 'recording' or epg.dvrState == 'scheduled') %}
-                                <img src='/assets/images/rec.png' alt='record' title='record'>
+                                <i class="fas fa-file-video"></i>
                             {% endif %}
                         </td>
                         <td class='col_title'>
@@ -82,7 +82,7 @@
                         <td>
                             {% if epg.dvrState is not defined or (epg.dvrState != 'recording' and epg.dvrState != 'scheduled') %}
                             <a href='/channel?action=record&event={{ epg.eventId }}'>
-                                <img src='/assets/images/rec_button1.png' alt='record' title='record'>
+                                <i class="fas fa-2x fa-circle"></i>
                             </a>
                             {% endif %}
                         </td>
@@ -90,7 +90,7 @@
                         <td>
                             {% if epg.dvrState is not defined or (epg.dvrState != 'recording' and epg.dvrState != 'scheduled') %}
                             <a href='/channel?action=recordseries&event={{ epg.eventId }}'>
-                                <img src='/assets/images/rec_buttonS.png' alt='record series' title='record series'>
+                                <i class="fas fa-2x fa-redo"></i>
                             </a>
                             {% endif %}
                         </td>

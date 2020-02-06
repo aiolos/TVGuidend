@@ -27,9 +27,11 @@
                     <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' title=''>
                         <td class='col_info'>
                         {% if timer.start_real < "now"|date('U') %}
-                            <img src='/assets/images/rec.png'>
+                            {#<img src='/assets/images/rec.png'>#}
+                            <i class="fas fa-circle"></i>
                         {% else %}
-                            <img src='/assets/images/tick_green.png'>
+                            <i class="fas fa-check"></i>
+                            {#<img src='/assets/images/tick_green.png'>#}
                         {% endif %}
                         </td>
                         <td class='col_channel'>{{ timer.channelname }}</td>
@@ -41,11 +43,13 @@
                         <td class='col_delete'>
                             {% if timer.autorec != '' %}
                                 <a href='/timers?action=cancelseries&uuid={{ timer.autorec }}'>
-                                    <img src='/assets/images/delete.png' title='Delete Autorec'>
+                                    <i class="fas fa-2x fa-trash"></i>
+                                    {#<img src='/assets/images/delete.png' title='Delete Autorec'>#}
                                 </a>
                             {% else %}
                                 <a href='/timers?action=cancel&uuid={{ timer.uuid }}'>
-                                    <img src='/assets/images/delete.png' title='Delete Timer'>
+                                    <i class="fas fa-2x fa-trash"></i>
+                                    {#<img src='/assets/images/delete.png' title='Delete Timer'>#}
                                 </a>
                             {% endif %}
                         </td>

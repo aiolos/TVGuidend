@@ -27,8 +27,8 @@
                     <td class='col_channel'><h2>Channel</h2></td>
                     <td class='wideonly col_length'><h2>Length</h2></td>
                     <td class='col_name'><h2>Name</h2></td>
-                    <td class='col_name'>Status</td>
-                    <td class='col_name'>Size</td>
+                    <td class='col_name'><h2>Status</h2></td>
+                    <td class='col_name'><h2>Size</h2></td>
                     <td class='col_delete'></td>
                     <td class='col_stream'></td>
                 </tr>
@@ -65,13 +65,13 @@
                         </td>
                         <td class='col_delete'>
                             <a href='/recordings/?action=delete&uuid={{ recording.uuid }}'>
-                                <img src='/assets/images/delete.png' alt='delete' title='Delete recording'>
+                                <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
                         <td class='col_stream'>
                             {% if rowClass != 'row_error' %}
                                 <a href='{{ url }}/play/dvrfile/{{ recording.uuid }}?title={{ recording.disp_title }}' alt='play' title='Play recording'>
-                                    <img src='/assets/images/play.png' title='Play'>
+                                    <i class="fas fa-play-circle"></i>
                                 </a>
                             {% endif %}
                         </td>
