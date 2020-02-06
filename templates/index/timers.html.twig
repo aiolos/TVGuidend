@@ -27,11 +27,13 @@
                     <tr class='{{ loop.index0 is odd ? 'row_odd' : 'row_even' }}' title=''>
                         <td class='col_info'>
                         {% if timer.start_real < "now"|date('U') %}
-                            {#<img src='/assets/images/rec.png'>#}
-                            <i class="fas fa-circle"></i>
+                            <span style="color: #BB0404" title="Now recording">
+                                <i class="fas fa-circle"></i>
+                            </span>
                         {% else %}
-                            <i class="fas fa-check"></i>
-                            {#<img src='/assets/images/tick_green.png'>#}
+                            <span style="color: darkgreen" title="Scheduled">
+                                <i class="fas fa-check"></i>
+                            </span>
                         {% endif %}
                         </td>
                         <td class='col_channel'>{{ timer.channelname }}</td>
@@ -43,13 +45,15 @@
                         <td class='col_delete'>
                             {% if timer.autorec != '' %}
                                 <a href='/timers?action=cancelseries&uuid={{ timer.autorec }}'>
-                                    <i class="fas fa-2x fa-trash"></i>
-                                    {#<img src='/assets/images/delete.png' title='Delete Autorec'>#}
+                                    <span style="color: slategray;">
+                                        <i class="fas fa-2x fa-trash-alt"></i>
+                                    </span>
                                 </a>
                             {% else %}
                                 <a href='/timers?action=cancel&uuid={{ timer.uuid }}'>
-                                    <i class="fas fa-2x fa-trash"></i>
-                                    {#<img src='/assets/images/delete.png' title='Delete Timer'>#}
+                                    <span style="color: slategray;">
+                                        <i class="fas fa-2x fa-trash-alt"></i>
+                                    </span>
                                 </a>
                             {% endif %}
                         </td>

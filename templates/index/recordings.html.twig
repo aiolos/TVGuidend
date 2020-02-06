@@ -57,21 +57,21 @@
                         </td>
                         <td>{{ recording.status }}</td>
                         <td>
-                            {% if (recording.filesize / 10**6) > 1000 %}
-                                {{ (recording.filesize / 10**9)|round(2) }} GB
-                            {% else %}
-                                {{ (recording.filesize / 10**6)|round(2) }} MB
-                            {% endif %}
+                            {{ recording.filesize|format_bytes }}
                         </td>
                         <td class='col_delete'>
                             <a href='/recordings/?action=delete&uuid={{ recording.uuid }}'>
-                                <i class="fas fa-trash-alt"></i>
+                                <span style="color: slategray;">
+                                    <i class="fas fa-trash-alt"></i>
+                                </span>
                             </a>
                         </td>
                         <td class='col_stream'>
                             {% if rowClass != 'row_error' %}
                                 <a href='{{ url }}/play/dvrfile/{{ recording.uuid }}?title={{ recording.disp_title }}' alt='play' title='Play recording'>
-                                    <i class="fas fa-play-circle"></i>
+                                    <span style="color: #6d96a9;">
+                                        <i class="fas fa-play-circle"></i>
+                                    </span>
                                 </a>
                             {% endif %}
                         </td>

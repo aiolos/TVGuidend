@@ -21,7 +21,7 @@
                         <td id="timespanCell">
                             {% set time = start %}
                             {% for color in ['#ffffff', '#dee6ee', '#ffffff', '#dee6ee'] %}
-                                <div class='elapsed' style='float: left; width: 24.5%; background-color: {{ color }}'>
+                                <div class='elapsed' style='float: left; width: 24.5%; background-color: {{ color }}; color: black'>
                                     <img src='/assets/images/spacer.gif' width=1 height=1 alt=''>
                                     {{ time|date('H:i', '+01:00 GMT') }}
                                 </div>
