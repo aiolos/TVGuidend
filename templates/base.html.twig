@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TVGuidend">
     <title>TVGuidend - {{ title is defined ? title }}</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/fontawesome.min.css">
-    {% block stylesheets %}{% endblock %}
+
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
     </head>
     <body>
         <div id="container">
@@ -24,6 +25,8 @@
 
         </div>
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

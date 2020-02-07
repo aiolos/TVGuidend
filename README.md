@@ -13,3 +13,15 @@ This application is heavily based on the layout created in TVHadmin (https://git
 - Add your ip/port/user/password to `.env.local` (copy from `.env`)
 - Run `composer install` on your webserver or in the docker container
 - Access TVGuidend on your webserver, or through docker (for example http://localhost:8087)
+
+### Vue / NodeJS / Yarn
+- `curl -sL https://deb.nodesource.com/setup_12.x  | bash -`
+- `curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -`
+- `echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list`
+- `apt-get update && apt-get install yarn`
+- `yarn install`
+
+#### Build assets
+- `yarn encore dev`
+- `yarn encore dev --watch`
+- `yarn encore production`

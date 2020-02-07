@@ -1,4 +1,4 @@
-tvheadmin:
+tvguidend:
   image: webdevops/php-nginx:7.2
   ports:
     - 8087:80
